@@ -7,10 +7,10 @@
     <title>Beranda</title>
 
     <!-- CSS -->
-    <link rel="stylesheet" href="../assets/css/general.css">
-    <link rel="stylesheet" href="../assets/css/style.css">
-    <link rel="stylesheet" href="../assets/css/query.css">
-    <link rel="stylesheet" href="../assets/css/helper.css">
+    <link rel="stylesheet" href="assets/css/general.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/query.css">
+    <link rel="stylesheet" href="assets/css/helper.css">
 </head>
 
 <body>
