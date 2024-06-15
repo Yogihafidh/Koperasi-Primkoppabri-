@@ -22,7 +22,7 @@
                 <h1 class="primary-heading">KSP PRIMKOPPABRI KUSUMA BANGSA</h1>
                 <p class="sub-heading">Koprasi Simpan Pinjam</p>
                 <div>
-                    <button class="btn">Registrasi</button>
+                    <a class="btn" href="registrasi">Registrasi</a>
                 </div>
             </div>
         </div>
@@ -57,7 +57,7 @@
                         <input type="text" placeholder="Password">
                     </div>
                 </form>
-                <button class="btn btn-login-registrasi">Login</button>
+                <a class="btn btn-login-registrasi" href="beranda">Login</a>
             </div>
 
         </div>

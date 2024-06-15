@@ -115,11 +115,6 @@
 /************************/
 /* BERANDA */
 /************************/
-.content {
-  margin: 2rem;
-  width: 100%;
-}
-
 .beranda-content {
   display: grid;
   grid-template-columns: 1.3fr 1.2fr;
@@ -131,32 +126,53 @@
   font-weight: 500;
 }
 
-/************************/
-/* TOTAL CARD */
-/************************/
-.date {
-  font-size: 1rem;
-  margin-bottom: 2rem;
+.total-beranda {
+  grid-column: 1/-1;
+}
+
+.date-beranda {
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
   color: var(--color-grey-medium);
 }
 
-.tota-summary {
+.total-summary {
+  width: 100%;
   display: flex;
+  align-items: center;
+  justify-content: space-between;
   gap: 2.4rem;
 }
 
 .nominal {
-  font-size: 1.8rem;
+  font-size: 3.2rem;
   font-weight: 600;
 }
 
 .keterangan {
-  font-size: 1.4rem;
+  font-size: 1.8rem;
 }
 
-/************************/
-/* TRANSAKSI CARD */
-/************************/
+.ricent-transaksi {
+  grid-column: 1/-1;
+  height: 40rem;
+  overflow: auto;
+}
+
+.ricent-transaksi::-webkit-scrollbar {
+  width: 0.7rem;
+  height: 0.5rem;
+}
+
+.ricent-transaksi::-webkit-scrollbar-thumb {
+  border-radius: 0.5rem;
+  background-color: #0002;
+}
+
+.ricent-transaksi:hover:-webkit-scrollbar-thumb {
+  visibility: hidden;
+}
+
 .row-date p {
   font-size: 1.4rem;
   font-weight: 600;
@@ -164,30 +180,38 @@
 }
 
 .row-transaksi {
+  width: 100%;
   display: flex;
   gap: 4rem;
   justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #adb5bd;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
 }
 
-.nama {
+.nama-beranda-box {
+  display: flex;
+  gap: 0.8rem;
+  align-items: center;
+}
+
+.nama-nasabah-beranda {
   font-size: 1.8rem;
   font-weight: 400;
-  margin-bottom: 0.4rem;
 }
 
 .keterangan-arus-kas {
   color: var(--color-grey-medium);
+  font-size: 1.4rem;
 }
 
 .time-transaksi,
 .nominal-transaksi {
   color: var(--color-grey-medium);
-  font-size: 1.2rem;
+  font-size: 1.6rem;
 }
 
-/************************/
-/* TRANSAKSI SUMMARY CARD */
-/************************/
 .card-summary {
   width: 100%;
 }
@@ -308,26 +332,12 @@
 /************************/
 
 .tabel-transaksi {
-  max-width: 90rem;
-  font-size: 1.2rem;
+  width: 100%;
+  font-size: 1.4rem;
   height: 30rem;
   background-color: #fff;
   border-radius: 7px;
-  overflow: auto;
-}
-
-.tabel-transaksi::-webkit-scrollbar {
-  width: 0.5rem;
-  height: 0.2rem;
-}
-
-.tabel-transaksi::-webkit-scrollbar-thumb {
-  border-radius: 0.5rem;
-  background-color: #0004;
-}
-
-.tabel-transaksi:hover:-webkit-scrollbar-thumb {
-  visibility: hidden;
+  overflow-x: auto;
 }
 
 table {
@@ -376,15 +386,25 @@ tbody tr td .nama-tabel {
   font-size: 1.4rem;
 }
 
+.nama-karyawan-colom {
+  width: 20rem;
+}
+
 tbody tr td .id {
   color: #908b93;
   font-size: 1.2rem;
+}
+
+.nama-tabel,
+.id {
+  width: 20rem;
 }
 
 .status {
   padding: 0.4rem 1.6rem;
   border-radius: 2rem;
   text-align: center;
+  width: 15rem;
 }
 
 .status span {
@@ -412,9 +432,28 @@ tbody tr td .id {
   color: #837e86;
 }
 
+/* Scroll Bar */
+.tabel-transaksi::-webkit-scrollbar {
+  width: 0.5rem;
+  height: 0.8rem;
+}
+
+.tabel-transaksi::-webkit-scrollbar-thumb {
+  border-radius: 0.5rem;
+  background-color: #0004;
+}
+
+/* .tabel-transaksi:hover:-webkit-scrollbar-thumb {
+  visibility: hidden;
+} */
+
 /************************/
 /* CRUD */
 /************************/
+.option-crud {
+  font-size: 3rem;
+}
+
 .crud {
   width: fit-content;
   padding: 2rem;
@@ -497,7 +536,7 @@ tbody tr td .id {
   padding: 1.6rem;
   border-radius: 7px;
   display: flex;
-  justify-items: space-between;
+  justify-content: space-between;
   gap: 4rem;
 }
 
@@ -548,10 +587,10 @@ tbody tr td .id {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 2rem;
-  width: 100%;
 }
 
 .report-card {
+  width: 100%;
   background-color: #ffffff;
   padding: 2rem;
   border-radius: 7px;
@@ -560,6 +599,7 @@ tbody tr td .id {
 
 .tabel-laporan {
   grid-column: 1 /-1;
+  width: 100%;
 }
 
 .tabel-laporan thead th {
@@ -570,5 +610,38 @@ tbody tr td .id {
   border-buttom: 1px solid #eaecf0;
 }
 
-.tabel-laporan-card {
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.1),
+    rgba(255, 255, 255, 0)
+  );
+  box-shadow: 0rem 0.6rem 0.6rem 0rem rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  z-index: 99999999;
+  color: white;
+  transition: all 0.5s;
+}
+
+.sticky .nav-link a:link,
+.sticky .nav-link a:visited {
+  color: white !important;
+}
+
+.sticky .btn-login,
+.sticky .btn-registrasi {
+  color: white;
+}
+
+.sticky .btn-login {
+  color: var(--color-dark);
+}
+
+.sticky .btn-login:hover {
+  color: white;
 }

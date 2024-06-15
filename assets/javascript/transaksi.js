@@ -1,25 +1,13 @@
 "use strict";
+
 // CRUD Display
 const tbody = document.querySelector(".tbody");
 const crudOptions = document.querySelector(".option-crud");
 const crud = document.querySelector(".crud");
 const cancel = document.querySelector(".cancel-btn");
 
-const btnMobile = document.querySelector(".btn-mobile-nav");
-const btnClose = document.querySelector(".btn-close");
-const rightBoxNav = document.querySelector(".right-box-nav");
-
-btnMobile.addEventListener("click", () => {
-  rightBoxNav.style.display = "flex";
-});
-
-btnClose.addEventListener("click", () => {
-  rightBoxNav.style.display = "none";
-});
-
 tbody.addEventListener("click", (e) => {
   e.preventDefault();
-
   const el = e.target.closest(".option-crud");
   const crud = e.target.closest(".crud-btn").querySelector(".crud");
   const cancel = e.target
@@ -38,7 +26,7 @@ tbody.addEventListener("click", (e) => {
   });
 });
 
-// CRUD Navigasi Display
+// CRUD Navigasi Display in Tabel
 const btnTimes = document.querySelectorAll(".btn-time");
 btnTimes.forEach((btn) => {
   btn.addEventListener("click", () => {
@@ -48,4 +36,17 @@ btnTimes.forEach((btn) => {
 
     btn.classList.add("btn-time-active");
   });
+});
+
+// Navigation Mobile
+const navigation = document.querySelector(".navigation");
+const btnNavMobile = document.querySelector(".btn-mobile-nav");
+const btnCloseNavMobile = document.querySelector(".btn-close-mobile-nav");
+
+btnNavMobile.addEventListener("click", () => {
+  navigation.classList.add("nav-open");
+});
+
+btnCloseNavMobile.addEventListener("click", () => {
+  navigation.classList.remove("nav-open");
 });
