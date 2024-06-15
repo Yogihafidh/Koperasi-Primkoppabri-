@@ -38,7 +38,9 @@
         <p>General</p>
         <ul class="sidebar-links">
 
-            <li class="sidebar-link active-sidebar">
+            <li class="sidebar-link <?php if ($_GET['mod'] === 'beranda') {
+                                        echo 'active-sidebar';
+                                    } ?>">
                 <a href="beranda" class="link">
 
                     <svg width="18" height="16" viewBox="0 0 28 26" fill="none" xmlns="http://www.w3.org/2000/svg"
@@ -57,7 +59,9 @@
                 </a>
             </li>
 
-            <li class="sidebar-link">
+            <li class="sidebar-link <?php if ($_GET['mod'] === 'transaksi') {
+                                        echo 'active-sidebar';
+                                    } ?>">
                 <a href="transaksi" class="link">
 
                     <svg width="11" height="21" viewBox="0 0 16 26" fill="none" xmlns="http://www.w3.org/2000/svg"
@@ -73,7 +77,9 @@
                 </a>
             </li>
 
-            <li class="sidebar-link">
+            <li class="sidebar-link <?php if ($_GET['mod'] === 'nasabah') {
+                                        echo 'active-sidebar';
+                                    } ?>">
                 <a href="nasabah" class="link">
 
                     <svg width="16" height="16" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"
@@ -89,7 +95,9 @@
                 </a>
             </li>
 
-            <li class="sidebar-link">
+            <li class="sidebar-link <?php if ($_GET['mod'] === 'pegawai') {
+                                        echo 'active-sidebar';
+                                    } ?>">
                 <a href="pegawai" class="link">
 
                     <svg width="20" height="14" viewBox="0 0 50 38" fill="none" xmlns="http://www.w3.org/2000/svg"
@@ -105,7 +113,9 @@
                 </a>
             </li>
 
-            <li class="sidebar-link">
+            <li class="sidebar-link <?php if ($_GET['mod'] === 'report') {
+                                        echo 'active-sidebar';
+                                    } ?>">
                 <a href="report" class="link">
                     <svg width="18" height="18" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"
                         xmlns:xlink="http://www.w3.org/1999/xlink">
