@@ -400,6 +400,10 @@ tbody tr td .id {
   width: 20rem;
 }
 
+.nominal-transaksi {
+  width: 15rem;
+}
+
 .status {
   padding: 0.4rem 1.6rem;
   border-radius: 2rem;
@@ -452,6 +456,7 @@ tbody tr td .id {
 /************************/
 .option-crud {
   font-size: 3rem;
+  cursor: pointer;
 }
 
 .crud {
@@ -644,4 +649,31 @@ tbody tr td .id {
 
 .sticky .btn-login:hover {
   color: white;
+}
+
+/************************/
+/* TAMBAH DATA */
+/************************/
+.overlay {
+  position: absolute;
+  bottom: 0;
+  top: 0;
+  right: 0;
+  left: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.1),
+    rgba(255, 255, 255, 0)
+  );
+  box-shadow: 0rem 0.6rem 0.6rem 0rem rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  z-index: 9999;
+  color: white;
+  transition: all 0.5s;
+}
+.tambah-data-nasabah {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }

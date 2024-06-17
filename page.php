@@ -16,4 +16,7 @@ if ($_GET['mod'] == 'home') {
     include "template/registrasi.php";
 } else if ($_GET['mod'] == 'login') {
     include "template/login.php";
+} else if ($_GET['mod'] == 'logout') {
+    // session_destroy();
+    include "template/landingpage.php";
 }

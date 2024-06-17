@@ -86,7 +86,8 @@ form {
   gap: 1.6rem;
 }
 
-input {
+input,
+select {
   border: 1px solid #dde3ec;
   border-radius: 20px;
   color: #536387;
@@ -98,9 +99,26 @@ input {
   width: 100%;
 }
 
-input:focus {
+input:focus,
+select:focus {
   outline: none;
   border: 2px solid var(--color-dark);
+}
+
+select {
+  appearance: none;
+}
+
+::placeholder {
+  opacity: 0.3;
+}
+
+.icon-placeholder svg {
+  opacity: 0.7;
+}
+
+select > option {
+  opacity: 0.5;
 }
 
 /************************/
@@ -116,7 +134,7 @@ input:focus {
   background: #ffffff;
   padding: 2.2rem;
   margin: 2rem;
-  z-index: 99999;
+  z-index: 999;
   transition: all 0.7s;
   /* width: 23%; */
 }

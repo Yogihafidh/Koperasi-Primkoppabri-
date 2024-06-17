@@ -1,6 +1,6 @@
 <?php
 // Koneksi Database
-$koneksi = mysqli_connect("localhost", "root", "", "db_dpw1");
+$koneksi = mysqli_connect("localhost", "root", "", "db_ksp");
 
 if (mysqli_connect_errno()) {
     // Pesan Koneksi Database Gagal
