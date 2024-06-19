@@ -45,7 +45,7 @@ VALUES ($id_user, '$_POST[role]', '$_POST[nama_lengkap]', '$_POST[no_hp]', '$_PO
                 <h1 class="primary-heading">KSP PRIMKOPPABRI KUSUMA BANGSA</h1>
                 <p class="sub-heading">Koprasi Simpan Pinjam</p>
                 <div>
-                    <button class="btn">Login</button>
+                    <a href="login" class="btn">Login</a>
                 </div>
             </div>
         </div>

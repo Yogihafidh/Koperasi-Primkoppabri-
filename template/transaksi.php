@@ -3,17 +3,26 @@ require_once('config/koneksi.php');
 
 $id_transaksi = rand(1, 999999999);
 
+// Mengaktifkan pelaporan kesalahan dan pengecualian MySQLi
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+
 // BTN ADD TRANSAKSI
 if (isset($_POST["add-btn"])) {
-    $query = "INSERT INTO transaksi (transaksi_id, jenis_transaksi_id, nasabah_id, nominal)
-VALUES ($id_transaksi, '$_POST[jenis_transaksi]', '$_POST[nasabah_id]', '$_POST[nominal_transaksi]')";
-    if ($koneksi->query($query) === TRUE) {
-        header('location:page.php?mod=transaksi');
+    try {
+        $query = "INSERT INTO transaksi (transaksi_id, jenis_transaksi_id, nasabah_id, nominal)
+    VALUES ($id_transaksi, '$_POST[jenis_transaksi]', '$_POST[nasabah_id]', '$_POST[nominal_transaksi]')";
+        if ($koneksi->query($query) === TRUE) {
+            header('location:page.php?mod=transaksi');
+            exit();
+        } else {
+            throw new Exception("Error: " . $query . "<br>" . $koneksi->error);
+        }
+    } catch (Exception $e) {
+        header('location:page.php?mod=errorTransaksi');
         exit();
-    } else {
-        echo "Error: " . $query . "<br>" . $koneksi->error;
     }
 }
+
 
 // BTN SEARCH
 if (isset($_POST["search-btn"])) {

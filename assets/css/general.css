@@ -58,6 +58,7 @@ body {
 
 .sub-heading {
   font-size: 1.6rem;
+  margin-bottom: 4rem;
 }
 
 /************************/
@@ -263,6 +264,18 @@ select > option {
 /************************/
 /* CARD */
 /************************/
+.error-container {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.error-modal {
+  position: relative !important;
+  transform: none !important;
+}
+
 .error {
   text-align: center;
   width: 40rem;
@@ -279,7 +292,7 @@ select > option {
 .error-heading {
   font-size: 2rem;
   font-weight: 700;
-  margin-bottom: 0.6rem;
+  margin-bottom: 2rem;
   color: #e75c29;
 }
 .error-message {

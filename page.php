@@ -28,6 +28,8 @@ if ($_GET['mod'] == 'home') {
     include "template/transaksi/editTransaksi.php";
 } else if ($_GET['mod'] == 'hapusTransaksi') {
     include "template/transaksi/hapusTransaksi.php";
-} else if ($_GET['mod'] == 'errorLogin') {
-    include "template/transaksi/hapusTransaksi.php";
+} else if ($_GET['mod'] == 'errorTransaksi') {
+    include "template/errorMessage/errorTransaksi.php";
+} else if ($_GET['mod'] == 'errorDeleteNasabah') {
+    include "template/errorMessage/errorDeleteNasabah.php";
 }

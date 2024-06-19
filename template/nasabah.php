@@ -29,7 +29,7 @@ if (isset($_POST["search-btn"])) {
     $datas = $koneksi->query($query);
 } else {
     // Menggunakan query sql agar menampilkan data produk dan join kedalam tabel user agar mendapatkan siapa pemilik produk
-    $query = "SELECT * FROM nasabah";
+    $query = "SELECT * FROM nasabah ORDER BY nama_nasabah ASC";
     $datas = $koneksi->query($query);
 }
 

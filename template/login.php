@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         exit();
     } else {
-        echo "Login gagal. Silahkan cek kembali email dan password Anda.";
+        header("location:page.php?mod=home");
     }
     // Tutup koneksi database
     $conn->close();
