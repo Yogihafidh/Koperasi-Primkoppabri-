@@ -2,21 +2,17 @@
 
 // CRUD Display
 const tbody = document.querySelector(".tbody");
-const crudOptions = document.querySelector(".option-crud");
-const crud = document.querySelector(".crud");
-const cancel = document.querySelector(".cancel-btn");
 
 tbody.addEventListener("click", (e) => {
-  e.preventDefault();
+  // e.preventDefault();
   const el = e.target.closest(".option-crud");
-  const crud = e.target.closest(".crud-btn").querySelector(".crud");
+  const crud = e.target.closest(".crud-btn")?.querySelector(".crud");
   const cancel = e.target
     .closest(".crud-btn")
-    .querySelector(".crud")
-    .querySelector(".cancel-btn");
+    ?.querySelector(".crud")
+    ?.querySelector(".cancel-btn");
 
-  console.log(cancel);
-  if (!el || !crud) return;
+  if (!el || !cancel || !crud) return;
 
   crud.classList.remove("hidden");
 
@@ -49,4 +45,18 @@ btnNavMobile.addEventListener("click", () => {
 
 btnCloseNavMobile.addEventListener("click", () => {
   navigation.classList.remove("nav-open");
+});
+
+// Buttton Add Transaksi
+const addTransaksi = document.querySelector(".btn-add-transaksi");
+const closeModalTransaksi = document.querySelector(".btn-close-transaksi");
+const modalTransaksi = document.querySelector(".modal-tambah-data-transaksi");
+console.log(modalTransaksi);
+
+addTransaksi.addEventListener("click", () => {
+  modalTransaksi.classList.remove("hidden");
+});
+
+closeModalTransaksi.addEventListener("click", () => {
+  modalTransaksi.classList.add("hidden");
 });

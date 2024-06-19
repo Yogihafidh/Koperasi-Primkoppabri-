@@ -19,4 +19,16 @@ if ($_GET['mod'] == 'home') {
 } else if ($_GET['mod'] == 'logout') {
     // session_destroy();
     include "template/landingpage.php";
+} else if ($_GET['mod'] == 'editPegawai') {
+    include "template/pegawai/editPegawai.php";
+} else if ($_GET['mod'] == 'hapusPegawai') {
+    include "template/pegawai/hapusPegawai.php";
+} else if ($_GET['mod'] == 'editNasabah') {
+    include "template/nasabah/editNasabah.php";
+} else if ($_GET['mod'] == 'hapusNasabah') {
+    include "template/nasabah/hapusNasabah.php";
+} else if ($_GET['mod'] == 'editTransaksi') {
+    include "template/transaksi/editTransaksi.php";
+} else if ($_GET['mod'] == 'hapusTransaksi') {
+    include "template/transaksi/hapusTransaksi.php";
 }

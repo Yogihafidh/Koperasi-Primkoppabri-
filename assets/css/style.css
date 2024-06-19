@@ -245,7 +245,7 @@
   display: flex;
   gap: 2rem;
   justify-content: space-between;
-  align-items: center;
+  align-items: stretch;
   align-content: center;
   margin-bottom: 4rem;
 }
@@ -257,7 +257,7 @@
   font-weight: 500;
   outline: none;
   transition: all 0.1s;
-  padding: 0.8rem 0.8rem 0.8rem 4.2rem;
+  padding: 1rem;
   width: 25rem;
   box-shadow: 0rem 0rem 0.2rem 0rem rgba(0, 0, 0, 0.2);
 }
@@ -290,7 +290,7 @@
   font-weight: 500;
   transition: all 0.3s;
   border-radius: 7px;
-  padding: 0.8rem 1.8rem;
+  padding: 1rem 1.8rem;
   background-color: var(--color-medium);
   color: #fff;
   text-align: center;
@@ -661,6 +661,12 @@ tbody tr td .id {
   transform: translateY(-50%);
 }
 
+.modal-tambah-data-transaksi {
+  top: 67%;
+  right: 30%;
+  transform: translateY(-50%);
+}
+
 .btn-close,
 .btn-close {
   position: absolute;
@@ -685,6 +691,23 @@ tbody tr td .id {
 
 .modal-edit-data-pegawai {
   top: 50%;
-  right: 30%;
-  transform: translateY(-50%);
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.searching {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1rem;
+  flex-direction: row !important;
+}
+
+.btn-search {
+  background-color: var(--color-medium);
+  padding: 1rem 2rem;
+}
+
+.modal {
+  height: 100vh;
 }

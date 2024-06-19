@@ -1,3 +1,34 @@
+<?php
+
+$id_transaksi = rand(1, 999999999);
+
+// Koneksi Database
+require_once('config/koneksi.php');
+
+// Fungsionalitas Tambah data nasabah
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+
+    // Query untuk menyimpan data pengguna baru ke tabel pengguna
+    $query = "INSERT INTO transaksi (transaksi_id, jenis_transaksi_id, nasabah_id, nominal)
+VALUES ($id_transaksi, '$_POST[jenis_transaksi]', '$_POST[nasabah_id]', '$_POST[nominal_transaksi]')";
+
+    if ($koneksi->query($query) === TRUE) {
+        header('location:page.php?mod=transaksi');
+        exit();
+    } else {
+        echo "Error: " . $query . "<br>" . $koneksi->error;
+    }
+}
+
+// Fungsionalitas Seacrhing
+if (isset($_POST["search-btn"])) {
+    $cari = $_POST["search"];
+    $query = "SELECT * FROM nasabah WHERE nama_nasabah LIKE '$cari%'";
+    $result = mysqli_query($koneksi, $query);
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -69,14 +100,14 @@
             <!-- NAVIGASI -->
             <nav class="navigation">
                 <!-- SEARCH -->
-                <div class="form-input">
-                    <div class="icon-placeholder">
-                        <svg class="search-icon" width="16" height="16" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                            <path d="M22.83,20.688C24.766,18.045 25.634,14.769 25.258,11.514C24.883,8.26 23.292,5.267 20.805,3.134C18.318,1.002 15.117,-0.113 11.843,0.013C8.569,0.14 5.464,1.497 3.148,3.815C0.832,6.132 -0.523,9.239 -0.647,12.512C-0.771,15.786 0.346,18.986 2.48,21.472C4.615,23.958 7.609,25.546 10.864,25.919C14.119,26.292 17.394,25.423 20.036,23.484L20.034,23.484C20.094,23.564 20.158,23.64 20.23,23.714L27.93,31.414C28.305,31.789 28.813,32 29.344,32C29.874,32.001 30.383,31.79 30.759,31.415C31.134,31.04 31.345,30.531 31.345,30.001C31.345,29.47 31.135,28.961 30.76,28.586L23.06,20.886C22.988,20.814 22.911,20.747 22.83,20.686L22.83,20.688ZM23.346,13C23.346,14.445 23.061,15.875 22.508,17.21C21.955,18.544 21.145,19.757 20.124,20.778C19.102,21.8 17.89,22.61 16.555,23.163C15.22,23.716 13.79,24 12.346,24C10.901,24 9.471,23.716 8.136,23.163C6.801,22.61 5.589,21.8 4.567,20.778C3.546,19.757 2.736,18.544 2.183,17.21C1.63,15.875 1.346,14.445 1.346,13C1.346,10.083 2.504,7.285 4.567,5.222C6.63,3.159 9.428,2 12.346,2C15.263,2 18.061,3.159 20.124,5.222C22.187,7.285 23.346,10.083 23.346,13L23.346,13Z" fill="#212529" />
+                <form action="" class="searching" method="POST">
+                    <input type="text" class="search-input" placeholder="Search" autocomplete="off" name="search">
+                    <button class="btn btn-search" name="search-btn" type="submit">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
+                            <path fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10a7 7 0 1 0 14 0a7 7 0 1 0-14 0m18 11l-6-6" />
                         </svg>
-                    </div>
-                    <input type="text" class="search-input" placeholder="Search">
-                </div>
+                    </button>
+                </form>
 
                 <!-- BUTTON MOBILE NAVIGATION -->
                 <div class="btn-mobile">
@@ -135,62 +166,75 @@
                     </thead>
 
                     <tbody class="tbody">
-                        <tr>
-                            <td>
-                                <p class="nama-tabel">Vela Anguliar</p>
-                                <p class="id">192803-AB920</p>
-                            </td>
-                            <td>
-                                <p class="status accepted"><span>●</span>Accepted</p>
-                            </td>
-                            <td>Angsuran</td>
-                            <td>
-                                <p class="nominal-transaksi">
-                                    $0.00
-                                </p>
-                            </td>
-                            <td>09/06/2024</td>
-                            <td class="crud-btn">
-                                <p class="option-crud">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="3rem" height="3rem" viewBox="0 0 24 24">
-                                        <path fill="black" d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0-4 0m0-6a2 2 0 1 0 4 0a2 2 0 0 0-4 0m0 12a2 2 0 1 0 4 0a2 2 0 0 0-4 0" />
-                                    </svg>
-                                </p>
-                                <section class="crud hidden">
-                                    <ul class="crud-list-items">
-                                        <li class="crud-list-item">
-                                            <a href="">
-                                                <svg width="18" height="18" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                                                    <path d="M8,40L6,40C6,41.105 6.895,42 8,42L8,40ZM16,40L16,42C16.53,42 17.039,41.79 17.414,41.415L16,40ZM37,19L38.414,20.415L38.414,20.415L37,19ZM38.657,15L40.657,15L38.657,15ZM29,11L27.586,9.586L27.586,9.586L29,11ZM8,32L6.586,30.586C6.211,30.961 6,31.47 6,32L8,32ZM8,42L16,42L16,38L8,38L8,42ZM17.414,41.415L38.414,20.415L35.586,17.586L14.586,38.586L17.414,41.415ZM38.414,20.415C39.85,18.979 40.657,17.031 40.657,15L36.657,15C36.657,15.97 36.272,16.9 35.586,17.586L38.414,20.415ZM40.657,15C40.657,12.97 39.85,11.022 38.414,9.586L35.586,12.415C36.272,13.1 36.657,14.031 36.657,15L40.657,15ZM38.414,9.586C36.978,8.15 35.031,7.344 33,7.344L33,11.344C33.97,11.344 34.9,11.729 35.586,12.415L38.414,9.586ZM33,7.344C30.969,7.344 29.022,8.15 27.586,9.586L30.414,12.415C31.1,11.729 32.03,11.344 33,11.344L33,7.344ZM27.586,9.586L6.586,30.586L9.414,33.415L30.414,12.415L27.586,9.586ZM6,32L6,40L10,40L10,32L6,32Z" fill="#403A44" />
-                                                    <path d="M28.414,11.586C27.633,10.805 26.367,10.805 25.586,11.586C24.805,12.367 24.805,13.634 25.586,14.415L28.414,11.586ZM33.586,22.415C34.367,23.196 35.633,23.196 36.414,22.415C37.195,21.634 37.195,20.367 36.414,19.586L33.586,22.415ZM25.586,14.415L33.586,22.415L36.414,19.586L28.414,11.586L25.586,14.415Z" fill="#403A44" />
-                                                </svg>
-                                                <span>Edit</span>
-                                            </a>
-                                        </li>
-                                        <li class="crud-list-item">
-                                            <a href="">
-                                                <svg width="18" height="18" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                                                    <line x1="8" y1="12" x2="40" y2="12" stroke="#E75C29" stroke-width="2" stroke-miterlimit="3.999327" stroke-linecap="round" stroke-linejoin="round" />
-                                                    <line x1="18" y1="22" x2="18" y2="34" stroke="#E75C29" stroke-width="2" stroke-miterlimit="3.999327" stroke-linecap="round" stroke-linejoin="round" />
-                                                    <line x1="26" y1="22" x2="26" y2="34" stroke="#E75C29" stroke-width="2" stroke-miterlimit="3.999327" stroke-linecap="round" stroke-linejoin="round" />
-                                                    <path d="M11.993,13.834C11.901,12.734 10.935,11.916 9.834,12.007C8.733,12.099 7.915,13.066 8.007,14.167L11.993,13.834ZM12,38L14,38C14,37.945 13.998,37.89 13.993,37.834L12,38ZM36,38L34.007,37.834C34.002,37.89 34,37.945 34,38L36,38ZM39.993,14.167C40.085,13.066 39.267,12.099 38.166,12.007C37.065,11.916 36.099,12.734 36.007,13.834L39.993,14.167ZM8.007,14.167L10.007,38.166L13.993,37.834L11.993,13.834L8.007,14.167ZM10,38C10,39.592 10.632,41.118 11.757,42.243L14.586,39.415C14.211,39.04 14,38.531 14,38L10,38ZM11.757,42.243C12.883,43.368 14.409,44 16,44L16,40C15.47,40 14.961,39.79 14.586,39.415L11.757,42.243ZM16,44L32,44L32,40L16,40L16,44ZM32,44C33.591,44 35.117,43.368 36.243,42.243L33.414,39.415C33.039,39.79 32.53,40 32,40L32,44ZM36.243,42.243C37.368,41.118 38,39.592 38,38L34,38C34,38.531 33.789,39.04 33.414,39.415L36.243,42.243ZM37.993,38.166L39.993,14.167L36.007,13.834L34.007,37.834L37.993,38.166Z" fill="#E75C29" />
-                                                    <path d="M16,14C16,15.105 16.895,16 18,16C19.105,16 20,15.105 20,14L16,14ZM20,6L20,4L20,6ZM28,6L28,4L28,6ZM28,14C28,15.105 28.895,16 30,16C31.105,16 32,15.105 32,14L28,14ZM20,14L20,8L16,8L16,14L20,14ZM20,8L20,8L17.172,5.172C16.421,5.922 16,6.94 16,8L20,8ZM20,8L20,8L20,4C18.939,4 17.922,4.422 17.172,5.172L20,8ZM20,8L28,8L28,4L20,4L20,8ZM28,8L28,8L30.828,5.172C30.078,4.422 29.061,4 28,4L28,8ZM28,8L28,8L32,8C32,6.94 31.579,5.922 30.828,5.172L28,8ZM28,8L28,14L32,14L32,8L28,8Z" fill="#E75C29" />
-                                                </svg>
-                                                <span>Delete</span>
-                                            </a>
-                                        </li>
-                                        <li class="crud-list-item">
-                                            <a href="" class="cancel-btn">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
-                                                    <path fill="none" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 12L7 7m5 5l5 5m-5-5l5-5m-5 5l-5 5" />
-                                                </svg>
-                                                <span>Cancel</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </section>
-                            </td>
-                        </tr>
+                        <?php
+                        require_once('config/koneksi.php');
+
+                        $query = "SELECT n.nama_nasabah, n.nasabah_id, j.nama AS nama_transaksi, t.nominal AS nominal_transaksi, t.tanggal, t.transaksi_id FROM nasabah n 
+                                      JOIN transaksi t ON n.nasabah_id = t.nasabah_id JOIN jenis_transaksi j ON t.jenis_transaksi_id = j.jenis_transaksi_id ORDER BY t.tanggal ASC";
+                        $datas = $koneksi->query($query);
+                        foreach ($datas as $data) :
+                        ?>
+                            <tr>
+                                <td>
+                                    <p class="nama-tabel"><?= $data['nama_nasabah'] ?></p>
+                                    <p class="id"><?= $data['nasabah_id'] ?></p>
+                                </td>
+                                <td>
+                                    <p class="status accepted"><span>●</span>Accepted</p>
+                                </td>
+                                <td><?= $data['nama_transaksi'] ?></td>
+                                <td>
+                                    <p class="nominal-transaksi">
+                                        Rp<?= number_format($data['nominal_transaksi'], 0, ',', '.')  ?>
+                                    </p>
+                                </td>
+                                <td><?= date('Y-m-d', strtotime($data['tanggal'])) ?></td>
+                                <td class="crud-btn">
+                                    <p class="option-crud">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="3rem" height="3rem" viewBox="0 0 24 24">
+                                            <path fill="black" d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0-4 0m0-6a2 2 0 1 0 4 0a2 2 0 0 0-4 0m0 12a2 2 0 1 0 4 0a2 2 0 0 0-4 0" />
+                                        </svg>
+                                    </p>
+
+                                    <section class="crud hidden">
+                                        <ul class="crud-list-items">
+                                            <!-- Edit -->
+                                            <li class="crud-list-item">
+                                                <a href="?mod=editTransaksi&id=<?php echo $data['transaksi_id']; ?>">
+                                                    <svg width="18" height="18" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                                                        <path d="M8,40L6,40C6,41.105 6.895,42 8,42L8,40ZM16,40L16,42C16.53,42 17.039,41.79 17.414,41.415L16,40ZM37,19L38.414,20.415L38.414,20.415L37,19ZM38.657,15L40.657,15L38.657,15ZM29,11L27.586,9.586L27.586,9.586L29,11ZM8,32L6.586,30.586C6.211,30.961 6,31.47 6,32L8,32ZM8,42L16,42L16,38L8,38L8,42ZM17.414,41.415L38.414,20.415L35.586,17.586L14.586,38.586L17.414,41.415ZM38.414,20.415C39.85,18.979 40.657,17.031 40.657,15L36.657,15C36.657,15.97 36.272,16.9 35.586,17.586L38.414,20.415ZM40.657,15C40.657,12.97 39.85,11.022 38.414,9.586L35.586,12.415C36.272,13.1 36.657,14.031 36.657,15L40.657,15ZM38.414,9.586C36.978,8.15 35.031,7.344 33,7.344L33,11.344C33.97,11.344 34.9,11.729 35.586,12.415L38.414,9.586ZM33,7.344C30.969,7.344 29.022,8.15 27.586,9.586L30.414,12.415C31.1,11.729 32.03,11.344 33,11.344L33,7.344ZM27.586,9.586L6.586,30.586L9.414,33.415L30.414,12.415L27.586,9.586ZM6,32L6,40L10,40L10,32L6,32Z" fill="#403A44" />
+                                                        <path d="M28.414,11.586C27.633,10.805 26.367,10.805 25.586,11.586C24.805,12.367 24.805,13.634 25.586,14.415L28.414,11.586ZM33.586,22.415C34.367,23.196 35.633,23.196 36.414,22.415C37.195,21.634 37.195,20.367 36.414,19.586L33.586,22.415ZM25.586,14.415L33.586,22.415L36.414,19.586L28.414,11.586L25.586,14.415Z" fill="#403A44" />
+                                                    </svg>
+                                                    <span>Edit</span>
+                                                </a>
+                                            </li>
+                                            <!-- Delete -->
+                                            <li class="crud-list-item">
+                                                <a href="?mod=hapusTransaksi&id=<?php echo $data['transaksi_id']; ?>">
+                                                    <svg width="18" height="18" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                                                        <line x1="8" y1="12" x2="40" y2="12" stroke="#E75C29" stroke-width="2" stroke-miterlimit="3.999327" stroke-linecap="round" stroke-linejoin="round" />
+                                                        <line x1="18" y1="22" x2="18" y2="34" stroke="#E75C29" stroke-width="2" stroke-miterlimit="3.999327" stroke-linecap="round" stroke-linejoin="round" />
+                                                        <line x1="26" y1="22" x2="26" y2="34" stroke="#E75C29" stroke-width="2" stroke-miterlimit="3.999327" stroke-linecap="round" stroke-linejoin="round" />
+                                                        <path d="M11.993,13.834C11.901,12.734 10.935,11.916 9.834,12.007C8.733,12.099 7.915,13.066 8.007,14.167L11.993,13.834ZM12,38L14,38C14,37.945 13.998,37.89 13.993,37.834L12,38ZM36,38L34.007,37.834C34.002,37.89 34,37.945 34,38L36,38ZM39.993,14.167C40.085,13.066 39.267,12.099 38.166,12.007C37.065,11.916 36.099,12.734 36.007,13.834L39.993,14.167ZM8.007,14.167L10.007,38.166L13.993,37.834L11.993,13.834L8.007,14.167ZM10,38C10,39.592 10.632,41.118 11.757,42.243L14.586,39.415C14.211,39.04 14,38.531 14,38L10,38ZM11.757,42.243C12.883,43.368 14.409,44 16,44L16,40C15.47,40 14.961,39.79 14.586,39.415L11.757,42.243ZM16,44L32,44L32,40L16,40L16,44ZM32,44C33.591,44 35.117,43.368 36.243,42.243L33.414,39.415C33.039,39.79 32.53,40 32,40L32,44ZM36.243,42.243C37.368,41.118 38,39.592 38,38L34,38C34,38.531 33.789,39.04 33.414,39.415L36.243,42.243ZM37.993,38.166L39.993,14.167L36.007,13.834L34.007,37.834L37.993,38.166Z" fill="#E75C29" />
+                                                        <path d="M16,14C16,15.105 16.895,16 18,16C19.105,16 20,15.105 20,14L16,14ZM20,6L20,4L20,6ZM28,6L28,4L28,6ZM28,14C28,15.105 28.895,16 30,16C31.105,16 32,15.105 32,14L28,14ZM20,14L20,8L16,8L16,14L20,14ZM20,8L20,8L17.172,5.172C16.421,5.922 16,6.94 16,8L20,8ZM20,8L20,8L20,4C18.939,4 17.922,4.422 17.172,5.172L20,8ZM20,8L28,8L28,4L20,4L20,8ZM28,8L28,8L30.828,5.172C30.078,4.422 29.061,4 28,4L28,8ZM28,8L28,8L32,8C32,6.94 31.579,5.922 30.828,5.172L28,8ZM28,8L28,14L32,14L32,8L28,8Z" fill="#E75C29" />
+                                                    </svg>
+                                                    <span>Delete</span>
+                                                </a>
+                                            </li>
+                                            <!-- Cancel -->
+                                            <li class="crud-list-item">
+                                                <a href="" class="cancel-btn">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
+                                                        <path fill="none" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 12L7 7m5 5l5 5m-5-5l5-5m-5 5l-5 5" />
+                                                    </svg>
+                                                    <span>Cancel</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </section>
+                                </td>
+                            </tr>
+                        <?php endforeach ?>
                     </tbody>
                 </table>
             </section>
@@ -201,37 +245,13 @@
     <?php include 'footer.php'; ?>
 
     <!-- MODAL TAMBAH DATA TRANSAKSI -->
-    <div class="overlay"></div>
-    <section class="error">
-        <p class="error-heading">Tambah Transaksi</p>
+    <section class="error modal-tambah-data-transaksi hidden">
+        <svg class="btn-close-transaksi btn-close" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24">
+            <path fill="none" stroke="black" stroke-linecap=" round" stroke-linejoin="round" stroke-width="1.5" d="M6.758 17.243L12.001 12m5.243-5.243L12 12m0 0L6.758 6.757M12.001 12l5.243 5.243" />
+        </svg>
+        <p class="add-nasabah-heading">Tambah Transaksi</p>
         <form action="" method="POST">
-            <div class="form-input">
-                <div class="icon-placeholder">
-                    <svg width="14" height="16" viewBox="0 0 36 38" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                        <path d="M9,9C9,13.962 13.038,18 18,18C22.962,18 27,13.962 27,9C27,4.038 22.962,0 18,0C13.038,0 9,4.038 9,9ZM34,38L36,38L36,36C36,28.282 29.718,22 22,22L14,22C6.28,22 0,28.282 0,36L0,38L34,38Z" fill="#333333" />
-                    </svg>
-                </div>
-                <input type="text" placeholder="Full Name" name="nama_lengkap" required type="text">
-            </div>
-
-            <div class="form-input">
-                <div class="icon-placeholder">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
-                        <path fill="black" d="m19.23 15.26l-2.54-.29a1.99 1.99 0 0 0-1.64.57l-1.84 1.84a15.045 15.045 0 0 1-6.59-6.59l1.85-1.85c.43-.43.64-1.03.57-1.64l-.29-2.52a2.001 2.001 0 0 0-1.99-1.77H5.03c-1.13 0-2.07.94-2 2.07c.53 8.54 7.36 15.36 15.89 15.89c1.13.07 2.07-.87 2.07-2v-1.73c.01-1.01-.75-1.86-1.76-1.98" />
-                    </svg>
-                </div>
-                <input type="text" placeholder="Nomer HP" name="no_hp" required type="text">
-            </div>
-
-            <div class="form-input">
-                <div class="icon-placeholder">
-                    <svg width="24" height="12" viewBox="0 0 44 32" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                        <path d="M1,2.5L2.5,1L41.5,1L43,2.5L43,29.5L41.5,31L2.5,31L1,29.5L1,2.5ZM4,5.605L4,28L40,28L40,5.608L22.93,18.7L21.1,18.7L4,5.605ZM37.09,4L6.91,4L22,15.607L37.09,4Z" clip-rule="evenodd" fill-rule="evenodd" fill="#333" />
-                    </svg>
-                </div>
-                <input type="email" placeholder="Email Address" name="email" required type="email">
-            </div>
-
+            <!-- Jenis Transaksi -->
             <div class="form-input">
                 <div class="icon-placeholder">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
@@ -239,16 +259,36 @@
                     </svg>
                 </div>
                 <select name="jenis_transaksi">
-                    <option value="" disabled selected> Pilih jenis Transaksi Anda </option>
+                    <option value="" disabled selected> Pilih Jenis Transaksi </option>
                     <option value="1"> Pinjaman </option>
                     <option value="2"> Angsuran </option>
-                    <option value="3"> Ambil </option>
+                    <option value="3"> Pengambilan </option>
                     <option value="4"> Tabungan </option>
                 </select>
             </div>
-            <button class="btn btn-login-registrasi" type="submit">Registrasi</button>
-        </form>
 
+            <!-- Nasabah ID Input -->
+            <div class="form-input">
+                <div class="icon-placeholder">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                        <path fill="black" d="m19.23 15.26l-2.54-.29a1.99 1.99 0 0 0-1.64.57l-1.84 1.84a15.045 15.045 0 0 1-6.59-6.59l1.85-1.85c.43-.43.64-1.03.57-1.64l-.29-2.52a2.001 2.001 0 0 0-1.99-1.77H5.03c-1.13 0-2.07.94-2 2.07c.53 8.54 7.36 15.36 15.89 15.89c1.13.07 2.07-.87 2.07-2v-1.73c.01-1.01-.75-1.86-1.76-1.98" />
+                    </svg>
+                </div>
+                <input type="number" placeholder="ID Nasabah" name="nasabah_id" required type="number">
+            </div>
+
+            <!-- Nominal -->
+            <div class="form-input">
+                <div class="icon-placeholder">
+                    <svg width="24" height="12" viewBox="0 0 44 32" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                        <path d="M1,2.5L2.5,1L41.5,1L43,2.5L43,29.5L41.5,31L2.5,31L1,29.5L1,2.5ZM4,5.605L4,28L40,28L40,5.608L22.93,18.7L21.1,18.7L4,5.605ZM37.09,4L6.91,4L22,15.607L37.09,4Z" clip-rule="evenodd" fill-rule="evenodd" fill="#333" />
+                    </svg>
+                </div>
+                <input type="number" placeholder="Nominal" name="nominal_transaksi" required type="number">
+            </div>
+
+            <button class="btn btn-login-registrasi" type="submit">Tambah Transaksi</button>
+        </form>
     </section>
 
 </body>
