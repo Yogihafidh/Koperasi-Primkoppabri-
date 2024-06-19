@@ -701,6 +701,7 @@ tbody tr td .id {
 .btn-delete-data {
   background: none;
   border: none;
+  text-decoration: none;
 }
 
 .modal-edit-data-pegawai {
