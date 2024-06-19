@@ -1,18 +1,12 @@
 <?php
+require_once('config/koneksi.php');
 
 $id_transaksi = rand(1, 999999999);
 
-// Koneksi Database
-require_once('config/koneksi.php');
-
-// Fungsionalitas Tambah data nasabah
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-
-    // Query untuk menyimpan data pengguna baru ke tabel pengguna
+// BTN ADD TRANSAKSI
+if (isset($_POST["add-btn"])) {
     $query = "INSERT INTO transaksi (transaksi_id, jenis_transaksi_id, nasabah_id, nominal)
 VALUES ($id_transaksi, '$_POST[jenis_transaksi]', '$_POST[nasabah_id]', '$_POST[nominal_transaksi]')";
-
     if ($koneksi->query($query) === TRUE) {
         header('location:page.php?mod=transaksi');
         exit();
@@ -21,12 +15,34 @@ VALUES ($id_transaksi, '$_POST[jenis_transaksi]', '$_POST[nasabah_id]', '$_POST[
     }
 }
 
-// Fungsionalitas Seacrhing
+// BTN SEARCH
 if (isset($_POST["search-btn"])) {
     $cari = $_POST["search"];
-    $query = "SELECT * FROM nasabah WHERE nama_nasabah LIKE '$cari%'";
-    $result = mysqli_query($koneksi, $query);
+    $query = "SELECT n.nama_nasabah, n.nasabah_id, j.nama AS nama_transaksi, t.nominal AS nominal_transaksi, t.tanggal, t.transaksi_id FROM nasabah n 
+    JOIN transaksi t ON n.nasabah_id = t.nasabah_id JOIN jenis_transaksi j ON t.jenis_transaksi_id = j.jenis_transaksi_id WHERE n.nama_nasabah LIKE '$cari%' ORDER BY t.tanggal DESC";
+    $transaksi = $koneksi->query($query);
+} else if (isset($_POST["btn-day"])) {
+    $query = "SELECT n.nama_nasabah, n.nasabah_id, j.nama AS nama_transaksi, t.nominal AS nominal_transaksi, t.tanggal, t.transaksi_id FROM nasabah n 
+    JOIN transaksi t ON n.nasabah_id = t.nasabah_id JOIN jenis_transaksi j ON t.jenis_transaksi_id = j.jenis_transaksi_id WHERE DATE(tanggal) = CURDATE() ORDER BY t.tanggal DESC";
+    $transaksi = $koneksi->query($query);
+} else if (isset($_POST["btn-week"])) {
+    $query = "SELECT n.nama_nasabah, n.nasabah_id, j.nama AS nama_transaksi, t.nominal AS nominal_transaksi, t.tanggal, t.transaksi_id FROM nasabah n 
+    JOIN transaksi t ON n.nasabah_id = t.nasabah_id JOIN jenis_transaksi j ON t.jenis_transaksi_id = j.jenis_transaksi_id WHERE DATE(t.tanggal) >= DATE_SUB(CURDATE(), INTERVAL 1 WEEK) ORDER BY t.tanggal DESC";
+    $transaksi = $koneksi->query($query);
+} else if (isset($_POST["btn-month"])) {
+    $query = "SELECT n.nama_nasabah, n.nasabah_id, j.nama AS nama_transaksi, t.nominal AS nominal_transaksi, t.tanggal, t.transaksi_id FROM nasabah n 
+    JOIN transaksi t ON n.nasabah_id = t.nasabah_id JOIN jenis_transaksi j ON t.jenis_transaksi_id = j.jenis_transaksi_id WHERE DATE(tanggal) >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH) 
+ ORDER BY t.tanggal DESC";
+    $transaksi = $koneksi->query($query);
+} else {
+    $query = "SELECT n.nama_nasabah, n.nasabah_id, j.nama AS nama_transaksi, t.nominal AS nominal_transaksi, t.tanggal, t.transaksi_id FROM nasabah n 
+    JOIN transaksi t ON n.nasabah_id = t.nasabah_id JOIN jenis_transaksi j ON t.jenis_transaksi_id = j.jenis_transaksi_id ORDER BY t.tanggal DESC";
+    $transaksi = $koneksi->query($query);
 }
+
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -58,18 +74,17 @@ if (isset($_POST["search-btn"])) {
 
             <!-- YEAR SUMMARY -->
             <section class="year-summary">
-                <div class="card card-summary">
-                    <div class="keterangan-waktu">
-                        <div class="svg-container">
-                            <svg class="icon" width="20" height="16" viewBox="0 0 48 44" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                                <path d="M32.655,3.971C32.655,3.171 32.972,2.404 33.538,1.839C34.103,1.273 34.87,0.956 35.67,0.956L41.699,0.956C42.499,0.956 43.266,1.273 43.831,1.839C44.397,2.404 44.714,3.171 44.714,3.971L44.714,40.149L46.222,40.149C46.622,40.149 47.005,40.308 47.288,40.591C47.57,40.874 47.729,41.257 47.729,41.657C47.729,42.057 47.57,42.44 47.288,42.723C47.005,43.006 46.622,43.164 46.222,43.164L0.998,43.164C0.598,43.164 0.215,43.006 -0.068,42.723C-0.35,42.44 -0.509,42.057 -0.509,41.657C-0.509,41.257 -0.35,40.874 -0.068,40.591C0.215,40.308 0.598,40.149 0.998,40.149L2.506,40.149L2.506,31.105C2.506,30.305 2.823,29.538 3.389,28.973C3.954,28.408 4.721,28.09 5.521,28.09L11.55,28.09C12.35,28.09 13.117,28.408 13.682,28.973C14.248,29.538 14.565,30.305 14.565,31.105L14.565,40.149L17.58,40.149L17.58,19.045C17.58,18.246 17.898,17.479 18.463,16.913C19.029,16.348 19.795,16.03 20.595,16.03L26.625,16.03C27.424,16.03 28.191,16.348 28.757,16.913C29.322,17.479 29.64,18.246 29.64,19.045L29.64,40.149L32.655,40.149L32.655,3.971ZM35.67,40.149L41.699,40.149L41.699,3.971L35.67,3.971L35.67,40.149ZM26.625,40.149L26.625,19.045L20.595,19.045L20.595,40.149L26.625,40.149ZM11.55,40.149L11.55,31.105L5.521,31.105L5.521,40.149L11.55,40.149Z" fill="#212529" />
-                            </svg>
-                        </div>
-                        <span>Bulanan</span>
-                    </div>
-                    <p class="nominal-year-summary green-tag">Rp 45 jt</p>
-                </div>
-
+                <?php
+                require_once('config/koneksi.php');
+                $query = "SELECT SUM(nominal) AS pemasukan FROM transaksi WHERE jenis_transaksi_id IN (2,4) AND YEAR(tanggal) = YEAR(CURDATE()) AND MONTH(tanggal) = MONTH(CURDATE())";
+                $result = $koneksi->query($query);
+                if ($result->num_rows > 0) {
+                    // Mengambil satu baris data hasil query
+                    $data = $result->fetch_assoc();
+                    // Mengakses nilai dari kolom pinjaman
+                    $pemasukan = $data['pemasukan'] ?? 0;
+                }
+                ?>
                 <div class="card card-summary">
                     <div class="keterangan-waktu">
                         <div class="svg-container">
@@ -78,21 +93,32 @@ if (isset($_POST["search-btn"])) {
                                 <path d="M26.941,22.553C26.941,22.153 27.1,21.769 27.383,21.487C27.666,21.204 28.049,21.045 28.449,21.045L45.031,21.045L45.031,27.075L28.449,27.075C28.049,27.075 27.666,26.916 27.383,26.633C27.1,26.351 26.941,25.967 26.941,25.567L26.941,22.553ZM20.911,31.597L20.911,34.612C20.911,35.012 20.753,35.395 20.47,35.678C20.187,35.961 19.804,36.12 19.404,36.12L2.822,36.12L2.822,30.09L19.404,30.09C19.804,30.09 20.187,30.249 20.47,30.531C20.753,30.814 20.911,31.197 20.911,31.597Z" fill="#212529" />
                             </svg>
                         </div>
-                        <span>Mingguan</span>
+                        <span>Pemasukan Bulanan</span>
                     </div>
-                    <p class="nominal-year-summary blue-tag">Rp 45 jt</p>
+                    <p class="nominal-year-summary blue-tag">Rp <?= number_format($pemasukan, 0, ",", ".") ?></p>
                 </div>
 
                 <div class="card card-summary">
+                    <?php
+                    require_once('config/koneksi.php');
+                    $query = "SELECT SUM(nominal) AS pengeluaran FROM transaksi WHERE jenis_transaksi_id IN (1,3) AND YEAR(tanggal) = YEAR(CURDATE()) AND MONTH(tanggal) = MONTH(CURDATE())";
+                    $result = $koneksi->query($query);
+                    if ($result->num_rows > 0) {
+                        // Mengambil satu baris data hasil query
+                        $data = $result->fetch_assoc();
+                        // Mengakses nilai dari kolom pinjaman
+                        $pengeluaran = $data['pengeluaran'] ?? 0;
+                    }
+                    ?>
                     <div class="keterangan-waktu">
                         <div class="svg-container">
                             <svg class="icon" width="20" height="18" viewBox="0 0 50 38" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                                 <path d="M45.347,36.777C45.347,36.777 48.362,36.777 48.362,33.762C48.362,30.747 45.347,21.702 33.288,21.702C21.228,21.702 18.213,30.747 18.213,33.762C18.213,36.777 21.228,36.777 21.228,36.777L45.347,36.777ZM21.294,33.762C21.272,33.759 21.25,33.755 21.228,33.75C21.231,32.954 21.732,30.645 23.519,28.564C25.184,26.614 28.108,24.717 33.288,24.717C38.464,24.717 41.389,26.617 43.056,28.564C44.844,30.645 45.341,32.957 45.347,33.75L45.323,33.756C45.309,33.758 45.295,33.76 45.281,33.762L21.294,33.762L21.294,33.762ZM33.288,15.673C34.887,15.673 36.421,15.037 37.551,13.907C38.682,12.776 39.317,11.242 39.317,9.643C39.317,8.044 38.682,6.51 37.551,5.379C36.421,4.248 34.887,3.613 33.288,3.613C31.688,3.613 30.155,4.248 29.024,5.379C27.893,6.51 27.258,8.044 27.258,9.643C27.258,11.242 27.893,12.776 29.024,13.907C30.155,15.037 31.688,15.673 33.288,15.673ZM42.332,9.643C42.332,10.831 42.098,12.007 41.644,13.104C41.189,14.202 40.523,15.199 39.683,16.038C38.843,16.878 37.846,17.545 36.749,17.999C35.652,18.454 34.475,18.688 33.288,18.688C32.1,18.688 30.924,18.454 29.826,17.999C28.729,17.545 27.732,16.878 26.892,16.038C26.052,15.199 25.386,14.202 24.931,13.104C24.477,12.007 24.243,10.831 24.243,9.643C24.243,7.244 25.196,4.944 26.892,3.247C28.588,1.551 30.889,0.598 33.288,0.598C35.686,0.598 37.987,1.551 39.683,3.247C41.379,4.944 42.332,7.244 42.332,9.643L42.332,9.643ZM21.035,22.547C19.829,22.167 18.586,21.917 17.327,21.802C16.619,21.735 15.909,21.701 15.198,21.702C3.139,21.702 0.124,30.747 0.124,33.762C0.124,35.773 1.128,36.777 3.139,36.777L15.849,36.777C15.403,35.836 15.18,34.804 15.198,33.762C15.198,30.717 16.335,27.606 18.484,25.007C19.217,24.12 20.07,23.291 21.035,22.547ZM14.957,24.717C13.173,27.398 12.209,30.542 12.183,33.762L3.139,33.762C3.139,32.978 3.633,30.657 5.43,28.564C7.073,26.647 9.928,24.778 14.957,24.72L14.957,24.717ZM4.646,11.15C4.646,8.752 5.599,6.451 7.295,4.755C8.991,3.059 11.292,2.106 13.691,2.106C16.09,2.106 18.39,3.059 20.086,4.755C21.783,6.451 22.736,8.752 22.736,11.15C22.736,13.549 21.783,15.85 20.086,17.546C18.39,19.242 16.09,20.195 13.691,20.195C11.292,20.195 8.991,19.242 7.295,17.546C5.599,15.85 4.646,13.549 4.646,11.15L4.646,11.15ZM13.691,5.121C12.092,5.121 10.558,5.756 9.427,6.887C8.296,8.017 7.661,9.551 7.661,11.15C7.661,12.75 8.296,14.283 9.427,15.414C10.558,16.545 12.092,17.18 13.691,17.18C15.29,17.18 16.824,16.545 17.955,15.414C19.085,14.283 19.721,12.75 19.721,11.15C19.721,9.551 19.085,8.017 17.955,6.887C16.824,5.756 15.29,5.121 13.691,5.121Z" fill="#212529" />
                             </svg>
                         </div>
-                        <span>Total Tahunan</span>
+                        <span>Pengeluaran Bulanan</span>
                     </div>
-                    <p class="nominal-year-summary yellow-tag">Rp 45 jt</p>
+                    <p class="nominal-year-summary yellow-tag">Rp <?= number_format($pengeluaran, 0, ",", ".") ?></p>
                 </div>
             </section>
 
@@ -131,23 +157,13 @@ if (isset($_POST["search-btn"])) {
                         </div>
                         <span>Tambah</span>
                     </button>
-                    <button class="btn-download">
-                        <div class="svg-container">
-                            <svg class="icon" width="20" height="20" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                                <path d="M31.667,28C30.562,28 29.667,28.896 29.667,30C29.667,31.105 30.562,32 31.667,32L31.667,28ZM31.667,18.334L31.667,16.334L31.667,16.334L31.667,18.334ZM30,18.334L28.049,17.896C27.916,18.488 28.059,19.109 28.439,19.584C28.818,20.058 29.393,20.334 30,20.334L30,18.334ZM15.661,9.655L16.687,11.372L15.661,9.655ZM11.667,15L11.587,16.999C12.552,17.038 13.407,16.381 13.618,15.439L11.667,15ZM7.367,30.834C8.38,31.275 9.559,30.812 10,29.8C10.441,28.787 9.978,27.608 8.966,27.167L7.367,30.834ZM31.667,32C33.744,32 35.737,31.175 37.206,29.706L34.377,26.878C33.658,27.597 32.683,28 31.667,28L31.667,32ZM37.206,29.706C38.675,28.237 39.5,26.245 39.5,24.167L35.5,24.167C35.5,25.184 35.096,26.159 34.377,26.878L37.206,29.706ZM39.5,24.167C39.5,22.09 38.675,20.097 37.206,18.628L34.377,21.457C35.096,22.175 35.5,23.15 35.5,24.167L39.5,24.167ZM37.206,18.628C35.737,17.159 33.744,16.334 31.667,16.334L31.667,20.334C32.683,20.334 33.658,20.738 34.377,21.457L37.206,18.628ZM31.667,16.334L30,16.334L30,20.334L31.667,20.334L31.667,16.334ZM31.951,18.772C32.258,17.404 32.263,15.994 31.965,14.625L28.057,15.475C28.231,16.275 28.228,17.096 28.049,17.896L31.951,18.772ZM31.965,14.625C31.667,13.256 31.075,11.965 30.234,10.825L27.015,13.199C27.532,13.9 27.882,14.674 28.057,15.475L31.965,14.625ZM30.234,10.825C29.393,9.685 28.321,8.719 27.088,7.972L25.017,11.394C25.821,11.881 26.497,12.497 27.015,13.199L30.234,10.825ZM27.088,7.972C25.855,7.226 24.48,6.711 23.043,6.449L22.327,10.385C23.298,10.561 24.212,10.907 25.017,11.394L27.088,7.972ZM23.043,6.449C21.606,6.188 20.128,6.184 18.689,6.438L19.383,10.377C20.355,10.206 21.357,10.208 22.327,10.385L23.043,6.449ZM18.689,6.438C17.251,6.691 15.873,7.199 14.635,7.938L16.687,11.372C17.495,10.889 18.411,10.548 19.383,10.377L18.689,6.438ZM14.635,7.938C12.136,9.431 10.336,11.797 9.715,14.562L13.618,15.439C13.98,13.828 15.053,12.348 16.687,11.372L14.635,7.938ZM11.747,13.002C9.53,12.913 7.34,13.563 5.552,14.856L7.895,18.098C8.945,17.339 10.25,16.945 11.587,16.999L11.747,13.002ZM5.552,14.856C3.762,16.149 2.48,18.012 1.949,20.137L5.83,21.107C6.126,19.923 6.848,18.855 7.895,18.098L5.552,14.856ZM1.949,20.137C1.418,22.263 1.677,24.499 2.675,26.454L6.238,24.636C5.676,23.535 5.534,22.289 5.83,21.107L1.949,20.137ZM2.675,26.454C3.673,28.408 5.338,29.949 7.367,30.834L8.966,27.167C7.759,26.641 6.801,25.739 6.238,24.636L2.675,26.454Z" fill="#403A44" />
-                                <line x1="18" y1="21.667" x2="18" y2="36.667" stroke="#403A44" stroke-width="2" stroke-miterlimit="3.999327" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M16.414,30.253C15.633,29.472 14.367,29.472 13.586,30.253C12.805,31.034 12.805,32.3 13.586,33.081L16.414,30.253ZM20,36.667L18.586,38.081C18.961,38.456 19.47,38.667 20,38.667C20.53,38.667 21.039,38.456 21.414,38.081L20,36.667ZM26.414,33.081C27.195,32.3 27.195,31.034 26.414,30.253C25.633,29.472 24.367,29.472 23.586,30.253L26.414,33.081ZM13.586,33.081L18.586,38.081L21.414,35.253L16.414,30.253L13.586,33.081ZM21.414,38.081L26.414,33.081L23.586,30.253L18.586,35.253L21.414,38.081Z" fill="#403A44" />
-                            </svg>
+                    <form action="" method="POST">
+                        <div class="btn-group">
+                            <button name="btn-day" class="btn-time <?php echo isset($_POST['btn-day']) ? 'btn-time-active' : ''; ?>" type="submit">24 hours</button>
+                            <button name="btn-week" class="btn-time <?php echo isset($_POST['btn-week']) ? 'btn-time-active' : ''; ?>" type="submit">7 days</button>
+                            <button name="btn-month" class="btn-time <?php echo isset($_POST['btn-month']) ? 'btn-time-active' : ''; ?>" type="submit">30 days</button>
                         </div>
-                        <span>
-                            Download
-                        </span>
-                    </button>
-                    <div class="btn-group">
-                        <button class="btn-time btn-time-active">24 hours</button>
-                        <button class="btn-time">7 days</button>
-                        <button class="btn-time">30 days</button>
-                    </div>
+                    </form>
                 </div>
             </nav>
 
@@ -157,7 +173,6 @@ if (isset($_POST["search-btn"])) {
                     <thead>
                         <tr>
                             <th>Nama</th>
-                            <th>Status</th>
                             <th>Jenis</th>
                             <th>Nominal</th>
                             <th>Date</th>
@@ -167,23 +182,15 @@ if (isset($_POST["search-btn"])) {
 
                     <tbody class="tbody">
                         <?php
-                        require_once('config/koneksi.php');
-
-                        $query = "SELECT n.nama_nasabah, n.nasabah_id, j.nama AS nama_transaksi, t.nominal AS nominal_transaksi, t.tanggal, t.transaksi_id FROM nasabah n 
-                                      JOIN transaksi t ON n.nasabah_id = t.nasabah_id JOIN jenis_transaksi j ON t.jenis_transaksi_id = j.jenis_transaksi_id ORDER BY t.tanggal ASC";
-                        $datas = $koneksi->query($query);
-                        foreach ($datas as $data) :
+                        foreach ($transaksi as $data) :
                         ?>
                             <tr>
-                                <td>
+                                <td class="row-container">
                                     <p class="nama-tabel"><?= $data['nama_nasabah'] ?></p>
                                     <p class="id"><?= $data['nasabah_id'] ?></p>
                                 </td>
-                                <td>
-                                    <p class="status accepted"><span>●</span>Accepted</p>
-                                </td>
                                 <td><?= $data['nama_transaksi'] ?></td>
-                                <td>
+                                <td class="row-container">
                                     <p class="nominal-transaksi">
                                         Rp<?= number_format($data['nominal_transaksi'], 0, ',', '.')  ?>
                                     </p>
@@ -287,7 +294,7 @@ if (isset($_POST["search-btn"])) {
                 <input type="number" placeholder="Nominal" name="nominal_transaksi" required type="number">
             </div>
 
-            <button class="btn btn-login-registrasi" type="submit">Tambah Transaksi</button>
+            <button class="btn btn-login-registrasi" type="submit" name="add-btn">Tambah Transaksi</button>
         </form>
     </section>
 

@@ -134,7 +134,7 @@ select > option {
   background: #ffffff;
   padding: 2.2rem;
   margin: 2rem;
-  z-index: 999;
+  z-index: 999999;
   transition: all 0.7s;
   /* width: 23%; */
 }

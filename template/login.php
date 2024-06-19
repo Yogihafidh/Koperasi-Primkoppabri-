@@ -1,3 +1,36 @@
+<?php
+// Cek apakah form telah disubmit
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    session_start();
+
+
+
+    // Lakukan operasi pengecekan login di database
+    require_once('config/koneksi.php');
+
+    // Query untuk memeriksa kecocokan email dan password di tabel pengguna
+    $query = "SELECT * FROM user WHERE email = '$_POST[email]' AND password ='$_POST[password]'";
+    $result = $koneksi->query($query);
+
+    if ($result->num_rows > 0) {
+        $user = $result->fetch_assoc();
+
+        $_SESSION['user_id'] = $user['user_id'];
+        $_SESSION['email'] = $user['email'];
+        $_SESSION['nama_lengkap'] = $user['nama_lengkap'];
+
+        header("location:page.php?mod=beranda");
+
+        exit();
+    } else {
+        echo "Login gagal. Silahkan cek kembali email dan password Anda.";
+    }
+    // Tutup koneksi database
+    $conn->close();
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,39 +45,6 @@
     <link rel="stylesheet" href="assets/css/query.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="assets/css/helper.css?v=<?php echo time(); ?>">
 </head>
-
-<?php
-// Cek apakah form telah disubmit
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Memulai session
-    session_start();
-
-    // Lakukan operasi pengecekan login di database
-    require_once('config/koneksi.php');
-
-    // Query untuk memeriksa kecocokan email dan password di tabel pengguna
-    $query = "SELECT * FROM user WHERE email = '$_POST[email]' AND password ='$_POST[password]'";
-
-    $result = $koneksi->query($query);
-
-    if ($result->num_rows > 0) {
-        // Login berhasil, simpan data pengguna ke dalam session
-        $user = $result->fetch_assoc();
-        $_SESSION['user_id'] = $user['user_id'];
-        $_SESSION['email'] = $user['email'];
-        $_SESSION['nama_lengkap'] = $user['nama_lengkap'];
-
-        // Login berhasil, redirect ke halaman utama
-        header("location:page.php?mod=beranda");
-        exit();
-    } else {
-        echo "Login gagal. Silahkan cek kembali email dan password Anda.";
-    }
-    // Tutup koneksi database
-    $conn->close();
-}
-
-?>
 
 <body>
     <section class="login">

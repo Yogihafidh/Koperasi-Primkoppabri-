@@ -10,14 +10,11 @@ if ($_GET['mod'] == 'home') {
     include "template/nasabah.php";
 } else if ($_GET['mod'] == 'pegawai') {
     include "template/pegawai.php";
-} else if ($_GET['mod'] == 'report') {
-    include "template/report.php";
 } else if ($_GET['mod'] == 'registrasi') {
     include "template/registrasi.php";
 } else if ($_GET['mod'] == 'login') {
     include "template/login.php";
 } else if ($_GET['mod'] == 'logout') {
-    // session_destroy();
     include "template/landingpage.php";
 } else if ($_GET['mod'] == 'editPegawai') {
     include "template/pegawai/editPegawai.php";
@@ -30,5 +27,7 @@ if ($_GET['mod'] == 'home') {
 } else if ($_GET['mod'] == 'editTransaksi') {
     include "template/transaksi/editTransaksi.php";
 } else if ($_GET['mod'] == 'hapusTransaksi') {
+    include "template/transaksi/hapusTransaksi.php";
+} else if ($_GET['mod'] == 'errorLogin') {
     include "template/transaksi/hapusTransaksi.php";
 }

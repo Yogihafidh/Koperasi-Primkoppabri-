@@ -1,42 +1,13 @@
 <?php
-session_start();
 include 'config/koneksi.php';
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $id = $_POST['user_id'];
-    $role = $_POST['role'];
-    $nama_lengkap = $_POST['nama_lengkap'];
-    $no_hp = $_POST['no_hp'];
-    $alamat = $_POST['alamat'];
-
-    $query = "UPDATE user SET role_id='$role', nama_lengkap='$nama_lengkap', no_hp='$no_hp', alamat='$alamat' WHERE user_id='$id'";
-
-    if ($koneksi->query($query)) {
-        header('location: page.php?mod=pegawai');
-        exit;
-    } else {
-        echo "Error executing query: " . $koneksi->error;
-    }
+if (isset($_POST["search-btn"])) {
+    $cari = $_POST["search"];
+    $query = "SELECT * FROM user LEFT JOIN role ON role.role_id = user.role_id WHERE nama_lengkap LIKE '$cari%'";
+    $datas = $koneksi->query($query);
+} else {
+    $query = "SELECT * FROM user LEFT JOIN role ON role.role_id = user.role_id";
+    $datas = $koneksi->query($query);
 }
-?>
-
-<?php
-include 'config/koneksi.php';
-
-if (isset($_GET['id'])) {
-    $id = $_GET['id'];
-
-    $query = "DELETE FROM user WHERE user_id = $id";
-
-    if ($koneksi->query($query)) {
-        header('location: page.php?mod=pegawai');
-        exit;
-    } else {
-        echo "Error executing query: " . $koneksi->error;
-    }
-}
-
-
 ?>
 
 <!DOCTYPE html>
@@ -85,10 +56,6 @@ if (isset($_GET['id'])) {
 
                 <div class="nasabah-list">
                     <?php
-                    include 'config/koneksi.php';
-                    // Menggunakan query sql agar menampilkan data produk dan join kedalam tabel user agar mendapatkan siapa pemilik produk
-                    $query = "SELECT * FROM user LEFT JOIN role ON role.role_id = user.role_id";
-                    $datas = $koneksi->query($query);
                     foreach ($datas as $data) :
                     ?>
                         <div class="nasabah">

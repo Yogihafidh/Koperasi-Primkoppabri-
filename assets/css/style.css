@@ -181,9 +181,10 @@
 
 .row-transaksi {
   width: 100%;
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
   gap: 4rem;
-  justify-content: space-between;
+  justify-items: center;
   align-items: center;
   border-bottom: 1px solid #adb5bd;
   padding-top: 1rem;
@@ -191,9 +192,11 @@
 }
 
 .nama-beranda-box {
+  justify-self: flex-start;
   display: flex;
   gap: 0.8rem;
   align-items: center;
+  padding-left: 2rem;
 }
 
 .nama-nasabah-beranda {
@@ -265,6 +268,7 @@
 .right-box-nav {
   display: flex;
   gap: 1rem;
+  align-items: stretch;
 }
 
 .btn-add-transaksi,
@@ -306,6 +310,8 @@
 
 .btn-group {
   display: flex;
+  align-items: stretch;
+  height: 100%;
 }
 
 .btn-time {
@@ -395,9 +401,17 @@ tbody tr td .id {
   font-size: 1.2rem;
 }
 
+.row-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 .nama-tabel,
 .id {
   width: 20rem;
+  text-align: center;
 }
 
 .nominal-transaksi {

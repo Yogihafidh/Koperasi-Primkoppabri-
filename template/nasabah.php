@@ -6,7 +6,7 @@ $id_nasabah = rand(1, 999999999);
 require_once('config/koneksi.php');
 
 // Fungsionalitas Tambah data nasabah
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if (isset($_POST["add-btn"])) {
 
 
     // Query untuk menyimpan data pengguna baru ke tabel pengguna
@@ -21,12 +21,18 @@ VALUES ($id_nasabah, '$_POST[nama_lengkap]', '$_POST[no_hp]', '$_POST[email]', '
     }
 }
 
+
 // Fungsionalitas Seacrhing
 if (isset($_POST["search-btn"])) {
     $cari = $_POST["search"];
     $query = "SELECT * FROM nasabah WHERE nama_nasabah LIKE '$cari%'";
-    $result = mysqli_query($koneksi, $query);
+    $datas = $koneksi->query($query);
+} else {
+    // Menggunakan query sql agar menampilkan data produk dan join kedalam tabel user agar mendapatkan siapa pemilik produk
+    $query = "SELECT * FROM nasabah";
+    $datas = $koneksi->query($query);
 }
+
 ?>
 
 
@@ -85,10 +91,6 @@ if (isset($_POST["search-btn"])) {
 
                 <div class="nasabah-list">
                     <?php
-                    include 'config/koneksi.php';
-                    // Menggunakan query sql agar menampilkan data produk dan join kedalam tabel user agar mendapatkan siapa pemilik produk
-                    $query = "SELECT * FROM nasabah";
-                    $datas = $koneksi->query($query);
                     foreach ($datas as $data) :
                     ?>
                         <div class="nasabah">
@@ -169,7 +171,7 @@ if (isset($_POST["search-btn"])) {
                 <input type="text" placeholder="Alamat" name="alamat" required type="text">
             </div>
 
-            <button class="btn btn-login-registrasi" type="submit">Tambah Nasabah</button>
+            <button class="btn btn-login-registrasi" type="submit" name="add-btn">Tambah Nasabah</button>
         </form>
     </section>
 </body>

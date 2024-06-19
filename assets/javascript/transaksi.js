@@ -51,7 +51,6 @@ btnCloseNavMobile.addEventListener("click", () => {
 const addTransaksi = document.querySelector(".btn-add-transaksi");
 const closeModalTransaksi = document.querySelector(".btn-close-transaksi");
 const modalTransaksi = document.querySelector(".modal-tambah-data-transaksi");
-console.log(modalTransaksi);
 
 addTransaksi.addEventListener("click", () => {
   modalTransaksi.classList.remove("hidden");
