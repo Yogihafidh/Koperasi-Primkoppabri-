@@ -271,6 +271,12 @@
   align-items: stretch;
 }
 
+.right-box-nav-nasabah {
+  justify-content: space-between !important;
+  gap: 10rem !important;
+  width: 100%;
+}
+
 .btn-add-transaksi,
 .btn-download {
   display: flex;
@@ -671,7 +677,7 @@ tbody tr td .id {
 
 .modal-tambah-data-nasabah {
   top: 40%;
-  right: 1%;
+  right: 30%;
   transform: translateY(-50%);
 }
 

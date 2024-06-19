@@ -63,29 +63,52 @@ if (isset($_POST["search-btn"])) {
 
         <!-- CONTENT -->
         <main class="content">
-            <h3 class="fourth-heading mb-2rm">Nasabah</h3>
+            <h3 class="fourth-heading mb-2rm heading-nasabah">Nasabah</h3>
 
             <!-- NAVIGASI -->
             <nav class="navigation">
-                <form action="" class="searching" method="POST">
-                    <input type="text" class="search-input" placeholder="Search" autocomplete="off" name="search">
-                    <button class="btn btn-search" name="search-btn" type="submit">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
-                            <path fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round"
-                                stroke-width="2" d="M3 10a7 7 0 1 0 14 0a7 7 0 1 0-14 0m18 11l-6-6" />
+
+                <div class="right-box-nav right-box-nav-nasabah">
+                    <svg class="icon-btn-mobile btn-close-mobile-nav" name="btn-close"
+                        xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24">
+                        <path fill="none" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 12L7 7m5 5l5 5m-5-5l5-5m-5 5l-5 5" />
+                    </svg>
+                    <!-- SEARCH INPUT -->
+                    <form action="" class="searching" method="POST">
+                        <input type="text" class="search-input" placeholder="Search" autocomplete="off" name="search">
+                        <button class="btn btn-search" name="search-btn" type="submit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
+                                <path fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2" d="M3 10a7 7 0 1 0 14 0a7 7 0 1 0-14 0m18 11l-6-6" />
+                            </svg>
+                        </button>
+                    </form>
+
+                    <!-- TAMBAH NASABAH BTN -->
+                    <button class="btn-add-transaksi btn-add-nasabah" type="button">
+                        <svg width="12" height="12" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg"
+                            xmlns:xlink="http://www.w3.org/1999/xlink">
+                            <path
+                                d="M23.5,9.375L15.625,9.375L15.625,1.5C15.625,0.57 14.805,-0.25 13.875,-0.25L12.125,-0.25C11.141,-0.25 10.375,0.57 10.375,1.5L10.375,9.375L2.5,9.375C1.516,9.375 0.75,10.195 0.75,11.125L0.75,12.875C0.75,13.859 1.516,14.625 2.5,14.625L10.375,14.625L10.375,22.5C10.375,23.484 11.141,24.25 12.125,24.25L13.875,24.25C14.805,24.25 15.625,23.484 15.625,22.5L15.625,14.625L23.5,14.625C24.43,14.625 25.25,13.859 25.25,12.875L25.25,11.125C25.25,10.195 24.43,9.375 23.5,9.375Z"
+                                fill="#FFFFFF" />
+                        </svg>
+                        <span>Tambah Nasabah</span>
+                    </button>
+                </div>
+
+                <!-- BUTTON MOBILE NAVIGATION -->
+                <div class="btn-mobile">
+                    <button class="btn-mobile-nav">
+                        <svg class="icon-btn-mobile-nav" name="btn-open" width="18" height="20" viewBox="0 0 30 32"
+                            fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                            <path
+                                d="M-0.626,1.373C-0.626,1.075 -0.507,0.789 -0.296,0.578C-0.085,0.367 0.201,0.248 0.499,0.248L27.499,0.248C27.798,0.248 28.084,0.367 28.295,0.578C28.506,0.789 28.624,1.075 28.624,1.373L28.624,5.873C28.624,6.151 28.522,6.418 28.336,6.625L18.499,17.555L18.499,28.373C18.499,28.609 18.425,28.839 18.287,29.031C18.148,29.222 17.954,29.365 17.73,29.44L10.98,31.69C10.811,31.746 10.631,31.762 10.455,31.735C10.278,31.708 10.111,31.639 9.967,31.535C9.822,31.431 9.704,31.294 9.623,31.136C9.542,30.977 9.499,30.802 9.499,30.623L9.499,17.555L-0.338,6.625C-0.523,6.418 -0.626,6.151 -0.626,5.873L-0.626,1.373ZM1.624,2.498L1.624,5.441L11.461,16.372C11.647,16.578 11.749,16.846 11.749,17.123L11.749,29.062L16.249,27.563L16.249,17.123C16.249,16.846 16.352,16.578 16.537,16.372L26.374,5.441L26.374,2.498L1.624,2.498Z"
+                                fill="#212529" />
                         </svg>
                     </button>
-                </form>
+                </div>
 
-                <button class="btn-add-transaksi btn-add-nasabah" type="button">
-                    <svg width="12" height="12" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg"
-                        xmlns:xlink="http://www.w3.org/1999/xlink">
-                        <path
-                            d="M23.5,9.375L15.625,9.375L15.625,1.5C15.625,0.57 14.805,-0.25 13.875,-0.25L12.125,-0.25C11.141,-0.25 10.375,0.57 10.375,1.5L10.375,9.375L2.5,9.375C1.516,9.375 0.75,10.195 0.75,11.125L0.75,12.875C0.75,13.859 1.516,14.625 2.5,14.625L10.375,14.625L10.375,22.5C10.375,23.484 11.141,24.25 12.125,24.25L13.875,24.25C14.805,24.25 15.625,23.484 15.625,22.5L15.625,14.625L23.5,14.625C24.43,14.625 25.25,13.859 25.25,12.875L25.25,11.125C25.25,10.195 24.43,9.375 23.5,9.375Z"
-                            fill="#FFFFFF" />
-                    </svg>
-                    <span>Tambah Nasabah</span>
-                </button>
             </nav>
 
             <!-- NASABAH -->
