@@ -14,5 +14,17 @@ This website was built using PHP, HTML, CSS, Bootstrap, and MySQL as a database.
 - PHP for basic website functionality.
 - MySQL and SQL to create databases and write database queries.
 
+# SRS Document
+[Uploading Documen SRS with PHP.pdf…]()
+
+
+# Demo
+![screencapture-koperasiprimkoppabri-online-Koprasi-login-2024-06-29-19_20_08](https://github.com/Yogihafidh/Koperasi-Primkoppabri-/assets/100673796/c7b643e0-4f23-46c2-99e9-02627459d5d0)
+![screencapture-koperasiprimkoppabri-online-Koprasi-registrasi-2024-06-29-19_20_26](https://github.com/Yogihafidh/Koperasi-Primkoppabri-/assets/100673796/3df3de85-1274-443c-a666-1941daa9532e)
+![screencapture-koperasiprimkoppabri-online-Koprasi-page-php-2024-06-29-19_22_09](https://github.com/Yogihafidh/Koperasi-Primkoppabri-/assets/100673796/26807523-d18a-43c6-9221-d3a48acce12c)
+![screencapture-koperasiprimkoppabri-online-Koprasi-page-php-2024-06-29-19_22_35](https://github.com/Yogihafidh/Koperasi-Primkoppabri-/assets/100673796/3683d57e-65b7-43fb-aab8-be71429d5292)
+![screencapture-koperasiprimkoppabri-online-Koprasi-page-php-2024-06-29-19_22_57](https://github.com/Yogihafidh/Koperasi-Primkoppabri-/assets/100673796/a56c4ea6-7344-4d2a-a23b-6effccb3d358)
+![screencapture-koperasiprimkoppabri-online-Koprasi-page-php-2024-06-29-19_21_52](https://github.com/Yogihafidh/Koperasi-Primkoppabri-/assets/100673796/d1dfe6af-b47c-42fa-b07b-b075e87dbe22)
+
 
   
